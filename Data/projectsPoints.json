@@ -1,0 +1,24 @@
+{
+  "identifier": "id",
+  "label": "name",
+  "items": [
+    {
+      "id": "1",
+      "name": "Emergent BioSolutions (Bayview)",
+      "street" : "5901 E Lombard Street",
+      "city" : "Baltimore",
+      "state": "MD",
+      "url": "https://www.emergentbiosolutions.com/",
+      "zip": "21224"
+    },
+    {
+      "id": "2",
+      "name": "MacroGenics",
+      "street": "9704 Medical Center Drive",
+      "city": "Rockville",
+      "state": "MD",
+      "url": "https://www.macrogenics.com/",
+      "zip": "20850"
+    }
+  ]
+}
