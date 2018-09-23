@@ -23,14 +23,13 @@
       }
     </style>
     <style>
-     var map = new Map("mapDiv", {
+    var map = new Map("mapDiv", {
           basemap: "streets",
           center: [-122.69, 45.52], //long, lat
           zoom: 13
-        });
-        // Set popup
-        var popup = map.infoWindow;
-        // popup.anchor = "top";
+    });
+    
+    var popup = map.infoWindow;
         popup.highlight = false;
         popup.titleInBody = false;
         popup.domNode.className += " light";
@@ -128,65 +127,40 @@
     <div class="wrapper">
       <header>
         <h1>daniel v alhadeff</h1>
-        <p>
-        1215&nbsp;EAST&nbsp;WEST&nbsp;HIGHWAY APT&nbsp;401 SILVER&nbsp;SPRING,&nbsp;MD 20910
-        <em>tel</em>  404-862-0064 <em>EMAIL</em> DVALHADEFF@GMAIL.COM
-        </p>
         <p>art <em>architecture</em> development <em>mapping</em>
         </p>
         <p class="view"><a href="https://github.com/DVAlhadeff">View My GitHub Profile</a></p>
 
       </header>
-      <section>
-        <h3>
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Bootstrap Map Example</title>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- Step 1. Add CSS for Bootstrap, ArcGIS and Bootstrap-map-js -->
-    <!-- Step 2. Add HTML to define the layout of the map and page -->
-    
-  <div class="panel panel-primary panel-fixed">
-    <div class="panel-heading">
-      <h3 class="panel-title">Find Places</h3>
-    </div>
-    <div class="panel-body">
-      <div class="form-group">
-        <input type="text" class="form-control" id="inputSearch" value="Coffee Shop" placeholder="Coffee Shop">
+    <div class="panel panel-primary panel-fixed">
+      <div class="panel-heading">
+        <h3 class="panel-title">Find Places</h3>
       </div>
-      <div class="form-inline">
-        <div class="checkbox">
-          <label>
-            <input id="useMapExtent" type="checkbox" checked/> Search map only
-          </label>
-        </div>        
-        <button class="btn btn-success" id="btnSearch">Go</button>
-        <button id="btnClear" class="btn btn-default">Clear</button>   
+      <div class="panel-body">
+        <div class="form-group">
+          <input type="text" class="form-control" id="inputSearch" value="Coffee Shop" placeholder="Coffee Shop">
+        </div>
+        <div class="form-inline">
+          <div class="checkbox">
+            <label>
+              <input id="useMapExtent" type="checkbox" checked/> Search map only
+            </label>
+          </div>        
+          <button class="btn btn-success" id="btnSearch">Go</button>
+          <button id="btnClear" class="btn btn-default">Clear</button>   
+        </div>
       </div>
     </div>
-  </div>
-      <div id="mapDiv"></div>
-    <!-- Step 3. Add JS to Load the responsive map -->
-    
-    <script type="text/javascript">
-        var package_path = "//esri.github.com/bootstrap-map-js/src/js";
-        var dojoConfig = {
-            packages: [{
-                name: "application",
-                location: package_path
-            }]
-        };
-    </script>
+    <div id="mapDiv"></div>
+
     <script src="http://js.arcgis.com/3.10compact"></script>
-    
-    <!-- jQuery (for Bootstrap's JavaScript plugins). NOTE: You can also use pure Dojo. See examples. -->
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <!-- Include all  plugins or individual files as needed -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-          <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+    <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
 
 <p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
