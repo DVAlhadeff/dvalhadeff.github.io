@@ -1,200 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <title>Dvalhadeff.github.io by DVAlhadeff</title>
+<head>
+  <meta charset='utf-8' />
+  <title>Display a map</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
+  <style>
+body {
+    margin:0; padding:0;
+}
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.10/js/esri/css/esri.css">   
-    <link rel="stylesheet" type="text/css" href="http://esri.github.io/bootstrap-map-js/src/css/bootstrapmap.css">   
-    
-    <style>
-      #mapDiv {
-        min-height:100px; 
-        max-height:500px; 
-      }
-    </style>
-    <script>
-    var map = new Map("mapDiv", {
-          basemap: "streets",
-          center: [-122.69, 45.52], //long, lat
-          zoom: 13
-    });
-    
-    var popup = map.infoWindow;
-        popup.highlight = false;
-        popup.titleInBody = false;
-        popup.domNode.className += " light";
-        // Get symbol
-        var symbol = new createPictureSymbol("//esri.github.io/quickstart-map-js/images/blue-pin.png", 0, 12, 13, 24);
-        // Create geoservice
-        var geocodeService = new Geocoder("//geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-        
-        // Wire events
-        on(map, "load", function() {
-          on(geocodeService, "address-to-locations-complete", geocodeResults);
-          on(geocodeService, "error", geocodeError);
-          on(dom.byId("btnSearch"),"click", geoSearch);
-          on(dom.byId("btnClear"),"click", clearFindGraphics);
-          on(dom.byId("inputSearch"), "keydown", function(event) {
-            if (event.keyCode == keys.ENTER) {
-              geoSearch();
-            }
-          });
-        });
-        // Geocode against the user input
-        function geoSearch() {
-          var searchString = dom.byId('inputSearch').value;
-          var boundingBox;
-          if (dom.byId('useMapExtent').checked)
-            boundingBox = map.extent;
-          // Set geocode options
-          var options = {
-            address:{"SingleLine": searchString},
-            outFields:["Place_addr", "PlaceName"],  // Coming soon: Place_addr will contain full address for POI locations!
-            searchExtent: boundingBox,
-            location: map.extent.getCenter(),
-            distance: 1
-          }
-          // Execute geosearch
-          geocodeService.addressToLocations(options);
-        }
-        
-        // Geocode results
-        function geocodeResults(places) {
-          if (places.addresses.length > 0) {
-            clearFindGraphics();
-            // Objects for the graphic
-            var place, attributes, infoTemplate, pt, graphic, placeName = "";
-            // Create and add graphics with pop-ups
-            for (var i = 0; i < places.addresses.length; i++) {
-              place = places.addresses[i];
-              pt = place.location;
-              placeName = place.attributes.Place_addr ? "${address}<br/>" : '';
-              attributes = { name:place.attributes.PlaceName, address:place.attributes.Place_addr, score:place.score, lat:pt.y.toFixed(5), lon:pt.x.toFixed(5) };   
-              infoTemplate = new InfoTemplate("${name}", placeName+"Lat/Lon: ${lat},${lon}<br/>Score: ${score}"+"<br/><a href='#' onclick='window.zoomToPlace(" + pt.x + "," + pt.y + ")'>Zoom</a>");
-              graphic = new Graphic(pt,symbol,attributes,infoTemplate);
-              map.graphics.add(graphic);  
-            }
-            zoomToPlaces(places.addresses);
-          } else {
-            alert("Sorry, address or place not found.");
-          }
-        }
-      
-        function geocodeError(errorInfo) {
-          alert("Sorry, place or address not found!");
-        }
-        window.zoomToPlace = function zoomToPlace(lon,lat) {
-          var level = map.getLevel();
-          level = level < 14 ? 14 : level + 1;
-          map.centerAndZoom([lon,lat],level);
-        }
-        function zoomToPlaces(places) {
-          var multiPoint = new Multipoint();
-          for (var i = 0; i < places.length; i++) {
-              multiPoint.addPoint(places[i].location);
-          }
-          map.setExtent(multiPoint.getExtent().expand(1.5));
-        }
-        function clearFindGraphics() {
-          map.infoWindow.hide();
-          map.graphics.clear();
-        }
-        function createPictureSymbol(url, xOffset, yOffset, xWidth, yHeight) {
-          return new PictureMarkerSymbol(
-          {
-            "angle": 0,
-            "xoffset": xOffset, "yoffset": yOffset, "type": "esriPMS",
-            "url": url,  
-            "contentType": "image/png",
-            "width":xWidth, "height": yHeight
-          });
-        }
-    </script>
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>daniel v alhadeff</h1>
-        <p>art <em>architecture</em> development <em>mapping</em>
-        </p>
-        <p class="view"><a href="https://github.com/DVAlhadeff">View My GitHub Profile</a></p>
+.left {
+    float: left;
+    width: 20%;
+    padding: 10px;
+}
 
-      </header>
+.right {
+    float:      left;
+    width:      60%;
+    max-height: 60%;
+    padding:    10px;
+}
 
-      <section>    
-    <div class="panel panel-primary panel-fixed">
-      <div class="panel-heading">
-        <h3 class="panel-title">Find Places</h3>
-      </div>
-      <div class="panel-body">
-        <div class="form-group">
-          <input type="text" class="form-control" id="inputSearch" value="Coffee Shop" placeholder="Coffee Shop">
-        </div>
-        <div class="form-inline">
-          <div class="checkbox">
-            <label>
-              <input id="useMapExtent" type="checkbox" checked/> Search map only
-            </label>
-          </div>        
-          <button class="btn btn-success" id="btnSearch">Go</button>
-          <button id="btnClear" class="btn btn-default">Clear</button>   
-        </div>
-      </div>
+#map {
+    position: absolute; width: 75%; height: 75%; left: 20%; top: 20%;
+}
+
+  </style>
+</head>
+<body>
+
+<div>
+    <h1> daniel v alhadeff </h1>
+</div>
+
+<div>
+    <div class='left' style='width: 20%;'>
+
+<h2>triathlons</h2>
+<ul>
+    <li>Colonial Beach</li>
+</ul>
     </div>
-    <div id="mapDiv"></div>
-
-    <script src="http://js.arcgis.com/3.10compact"></script>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-    <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-      <footer>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+    <div class='right' style='width: 80%; height: 20em;'>
+        <div id='map'></div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+</div>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoibWV0ZXVldG93YWgiLCJhIjoiSlcwUDRMYyJ9.OxPg7VFnhS4kF_uYkmyHHw';
+	const map = new mapboxgl.Map({
+	  container: 'map',
+	  style:'mapbox://styles/meteuetowah/cjmt5mefj22wk2rmoy19gbwjz',
+	  center: [-76.018104, 37.289153],
+	  zoom: 5.1
+	});
+</script>
+
+</body>
 </html>
